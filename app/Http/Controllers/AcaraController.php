@@ -10,18 +10,18 @@ class AcaraController extends Controller
 {
     public function store(Request $request, Invitation $invitation)
     {
-        $request->validate([
-            'nama_acara' => 'required|string|max:255',
-            'tanggal_acara' => 'required|date',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
-            'zona_waktu_tambah' => 'required',
-            'nama_tempat' => 'required|string|max:255',
-            'alamat_tempat' => 'required|string',
-            'link_google_maps' => 'required|url',
-        ]);
-
         try {
+            $request->validate([
+                'nama_acara' => 'required|string|max:255',
+                'tanggal_acara' => 'required|date',
+                'jam_mulai' => 'required',
+                'jam_selesai' => 'required',
+                'zona_waktu_tambah' => 'required',
+                'nama_tempat' => 'required|string|max:255',
+                'alamat_tempat' => 'required|string',
+                'link_google_maps' => 'required|url',
+            ]);
+
             $acara = new Acara($request->except('zona_waktu_tambah'));
             $acara->zona_waktu = $request->zona_waktu_tambah;
             $acara->invitation_id = $invitation->id;
@@ -35,18 +35,18 @@ class AcaraController extends Controller
 
     public function update(Request $request, Acara $acara)
     {
-        $request->validate([
-            'nama_acara' => 'required|string|max:255',
-            'tanggal_acara' => 'required|date',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
-            'zona_waktu' => 'required',
-            'nama_tempat' => 'required|string|max:255',
-            'alamat_tempat' => 'required|string',
-            'link_google_maps' => 'required|url',
-        ]);
-
         try {
+            $request->validate([
+                'nama_acara' => 'required|string|max:255',
+                'tanggal_acara' => 'required|date',
+                'jam_mulai' => 'required',
+                'jam_selesai' => 'required',
+                'zona_waktu' => 'required',
+                'nama_tempat' => 'required|string|max:255',
+                'alamat_tempat' => 'required|string',
+                'link_google_maps' => 'required|url',
+            ]);
+
             $acara->update($request->all());
 
             return redirect()->back()->with('success', 'Acara berhasil diperbarui')->withFragment('acara');

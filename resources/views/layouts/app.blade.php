@@ -33,6 +33,10 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <style>
         [x-cloak] {
             display: none;
@@ -89,10 +93,59 @@
             box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
             outline: none;
         }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            top: 40%;
+            background-color: rgba(31, 41, 55, 0.7);
+            color: #ffffff;
+            width: 35px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+
+        .swiper-button-next {
+            right: 0px;
+        }
+
+        .swiper-button-prev {
+            left: 0px;
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .swiper-pagination {
+            font-family: 'Average Sans', sans-serif;
+            font-size: 16px;
+            color: #1f2937;
+            padding: 6px 12px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .swiper-pagination-fraction {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .swiper-pagination-current {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .swiper-pagination-total {
+            font-weight: normal;
+            color: #6b7280;
+        }
     </style>
 </head>
 
 <body class="font-average antialiased">
+
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
         <!-- Page Content -->
@@ -267,7 +320,7 @@
                         if (!firstInvalidInput) {
                             firstInvalidInput = input;
                         }
-                        input.setCustomValidity('Kolom ini harus diisi.');
+                        input.setCustomValidity('Kolom ini harus diisi');
                     }
                 }
 
@@ -279,34 +332,55 @@
             });
         });
 
+        function validateURLInput(input) {
+            if (!input.value) {
+                input.setCustomValidity('Kolom ini harus diisi');
+            } else {
+                input.setCustomValidity('Link harus berupa URL yang valid');
+            }
+        }
+
+        function setTargetHash(inputId, targetId, formId) {
+            const queryInput = document.getElementById(inputId).value.trim();
+            const form = document.getElementById(formId);
+
+            if (queryInput !== '') {
+                form.action = form.action.split('#')[0] + `#${targetId}`;
+            }
+
+            return true;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-
-            form.addEventListener('submit', function(event) {
-                const requiredInputs = Array.from(form.querySelectorAll('input[required]'));
-                let firstInvalidInput = null;
-
-                requiredInputs.forEach(input => {
-                    input.setCustomValidity('');
-                });
-
-                for (const input of requiredInputs) {
-                    if (!input.value.trim()) {
-                        if (!firstInvalidInput) {
-                            firstInvalidInput = input;
-                        }
-                        input.setCustomValidity('Kolom ini harus diisi.');
-                    }
-                }
-
-                if (firstInvalidInput) {
-                    firstInvalidInput.focus();
-                    firstInvalidInput.reportValidity();
-                    event.preventDefault();
-                }
+            var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 1,
+                spaceBetween: 16,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    type: "fraction",
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    },
+                },
             });
         });
     </script>
+
 </body>
 
 </html>

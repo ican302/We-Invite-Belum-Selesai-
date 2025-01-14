@@ -16,6 +16,7 @@ class Theme extends Model
         'slug',
         'view_file',
         'thumbnail',
+        'tipe',
         'path',
     ];
 

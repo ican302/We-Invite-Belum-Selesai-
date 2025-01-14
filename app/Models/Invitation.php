@@ -44,7 +44,7 @@ class Invitation extends Model
 
     public function galeri()
     {
-        return $this->hasMany(Galeri::class);
+        return $this->hasOne(Galeri::class);
     }
 
     public function cerita()
@@ -75,5 +75,20 @@ class Invitation extends Model
     public function comment()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function rsvp()
+    {
+        return $this->hasMany(Rsvp::class);
+    }
+
+    public function tekspembuka()
+    {
+        return $this->hasOne(TeksPembuka::class);
+    }
+
+    public function tekspenutup()
+    {
+        return $this->hasOne(TeksPenutup::class);
     }
 }

@@ -14,6 +14,7 @@ class CreateThemesTable extends Migration
             $table->string('slug')->unique();
             $table->string('view_file');
             $table->string('thumbnail');
+            $table->string('tipe');
             $table->string('path');
             $table->timestamps();
         });

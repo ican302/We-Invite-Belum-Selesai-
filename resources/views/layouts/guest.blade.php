@@ -11,8 +11,13 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -50,46 +55,49 @@
     </style>
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
+<body class="font-average text-gray-900 antialiased">
+
     <div class="bg-container absolute inset-0 z-0"></div>
-    <div class="bg-white/50">
-        <div class="min-h-screen mx-10 py-10 flex flex-col sm:justify-center items-center sm:pt-0">
-            <div
-                class="w-full sm:max-w-md px-6 py-4 bg-white \shadow-md overflow-hidden sm:rounded-lg shadow-lg rounded-lg">
-                {{ $slot }}
-            </div>
+
+    <div class="min-h-screen flex items-center justify-center mx-5" data-aos="zoom-in" data-aos-easing="ease-in-sine"
+        data-aos-duration="800">
+        <div class="w-full sm:max-w-md px-6 py-4 bg-white shadow-lg overflow-hidden sm:rounded-lg rounded-lg">
+            {{ $slot }}
         </div>
     </div>
-</body>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
+    <script>
+        AOS.init();
 
-        form.addEventListener('submit', function(event) {
-            const requiredInputs = Array.from(form.querySelectorAll('input[required]'));
-            let firstInvalidInput = null;
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
 
-            requiredInputs.forEach(input => {
-                input.setCustomValidity('');
-            });
+            form.addEventListener('submit', function(event) {
+                const requiredInputs = Array.from(form.querySelectorAll('input[required]'));
+                let firstInvalidInput = null;
 
-            for (const input of requiredInputs) {
-                if (!input.value.trim()) {
-                    if (!firstInvalidInput) {
-                        firstInvalidInput = input;
+                requiredInputs.forEach(input => {
+                    input.setCustomValidity('');
+                });
+
+                for (const input of requiredInputs) {
+                    if (!input.value.trim()) {
+                        if (!firstInvalidInput) {
+                            firstInvalidInput = input;
+                        }
+                        input.setCustomValidity('Kolom ini harus diisi.');
                     }
-                    input.setCustomValidity('Kolom ini harus diisi.');
                 }
-            }
 
-            if (firstInvalidInput) {
-                firstInvalidInput.focus();
-                firstInvalidInput.reportValidity();
-                event.preventDefault();
-            }
+                if (firstInvalidInput) {
+                    firstInvalidInput.focus();
+                    firstInvalidInput.reportValidity();
+                    event.preventDefault();
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+</body>
 
 </html>

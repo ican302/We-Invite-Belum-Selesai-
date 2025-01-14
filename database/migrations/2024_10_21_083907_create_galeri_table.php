@@ -12,6 +12,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invitation_id')->constrained('invitations')->onDelete('cascade');
             $table->string('foto_sampul')->nullable();
+            $table->string('foto_pembuka')->nullable();
+            $table->string('foto_acara')->nullable();
+            $table->string('foto_cerita')->nullable();
             $table->json('foto_galeri')->nullable();
             $table->string('video_galeri')->nullable();
             $table->timestamps();

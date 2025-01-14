@@ -20,6 +20,12 @@ export default {
                 average: ["Average Sans", ...defaultTheme.fontFamily.sans],
                 montserrat: ["Montserrat", "sans-serif"],
                 croissant: ['"Croissant One"', "sans-serif"],
+                pinyon: ["Pinyon Script", "cursive"],
+                poppins: ["Poppins", "sans-serif"],
+                cormorant: ["Cormorant Infant", "serif"],
+                cormorantGaramond: ['"Cormorant Garamond"', "serif"],
+                sora: ["Sora", "sans-serif"],
+                dmSerifDisplay: ["'DM Serif Display'", "serif"],
             },
 
             fontSmooth: {

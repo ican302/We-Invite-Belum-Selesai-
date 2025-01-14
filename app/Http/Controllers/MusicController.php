@@ -10,26 +10,42 @@ class MusicController extends Controller
 {
     public function store(Request $request, $invitationId)
     {
-        $request->validate([
-            'music_link' => 'required|url',
-        ]);
+        try {
+            $request->validate([
+                'music_link' => 'required|url',
+            ]);
 
-        $invitation = Invitation::findOrFail($invitationId);
+            $invitation = Invitation::findOrFail($invitationId);
 
-        Music::create([
-            'invitation_id' => $invitation->id,
-            'file_path' => $request->music_link,
-        ]);
+            $music = Music::where('invitation_id', $invitation->id)->first();
 
-        return redirect()->back()->with('success', 'Musik berhasil diunggah')->withFragment('musik');
+            if ($music) {
+                $music->update([
+                    'file_path' => $request->music_link,
+                ]);
+            } else {
+                Music::create([
+                    'invitation_id' => $invitation->id,
+                    'file_path' => $request->music_link,
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Link musik berhasil disimpan')->withFragment('musik');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan link musik: ' . $e->getMessage())->withFragment('streaming');
+        }
     }
 
     public function destroy($id)
     {
-        $music = Music::findOrFail($id);
+        try {
+            $music = Music::findOrFail($id);
 
-        $music->delete();
+            $music->delete();
 
-        return redirect()->back()->with('success', 'Musik berhasil dihapus')->withFragment('musik');
+            return redirect()->back()->with('success', 'Link musik berhasil dihapus')->withFragment('musik');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus link musik: ' . $e->getMessage())->withFragment('streaming');
+        }
     }
 }

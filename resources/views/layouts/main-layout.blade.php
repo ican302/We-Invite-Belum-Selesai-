@@ -21,10 +21,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <script src="./node_modules/preline/dist/preline.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
 
     <style>
         html {
@@ -35,40 +38,17 @@
             background-image: url('/images/5569176.jpg');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             transform: rotate(180deg);
             width: 100%;
-            height: 100%;
-            position: absolute;
+            height: 100vh;
+            position: fixed;
             top: 0;
             left: 0;
             z-index: -1;
             opacity: 0.7;
         }
 
-        .bg-container-2 {
-            background-image: url('/images/5581248.jpg');
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 0.7;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-            opacity: 0;
-        }
-
-        .accordion-content.show {
-            max-height: 500px;
-            opacity: 1;
-        }
 
         .custom-input {
             background-color: #F9FAFB;
@@ -94,7 +74,7 @@
             }
 
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-5px);
             }
         }
 
@@ -112,6 +92,54 @@
 
         [x-cloak] {
             display: none;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            top: 40%;
+            background-color: rgba(31, 41, 55, 0.7);
+            color: #ffffff;
+            width: 35px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+
+        .swiper-button-next {
+            right: 0px;
+        }
+
+        .swiper-button-prev {
+            left: 0px;
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .swiper-pagination {
+            font-family: 'Average Sans', sans-serif;
+            font-size: 16px;
+            color: #1f2937;
+            padding: 6px 12px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .swiper-pagination-fraction {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .swiper-pagination-current {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .swiper-pagination-total {
+            font-weight: normal;
+            color: #6b7280;
         }
     </style>
 
@@ -135,28 +163,60 @@
         AOS.init();
 
         document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 1,
+                spaceBetween: 16,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    type: "fraction",
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    },
+                },
+            });
+
             new Splide('#carousel', {
                 type: 'loop',
+                arrows: false,
+                pagination: false,
                 autoplay: true,
                 interval: 3000,
                 pauseOnHover: false,
             }).mount();
-        });
 
-        function toggleAccordion(index) {
-            const accordionBody = document.getElementById(`accordion-collapse-body-${index}`);
-            accordionBody.classList.toggle('show');
-        }
+            const selectThemeButtons = document.querySelectorAll('.select-theme');
 
-        const selectThemeButtons = document.querySelectorAll('.select-theme');
-
-        selectThemeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const themeId = this.getAttribute('aria-controls').split('-').pop();
-                const modal = document.querySelector(`#hs-scale-animation-modal-${themeId}`);
-                const themeInput = modal.querySelector('#theme_id');
-                themeInput.value = themeId;
+            selectThemeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const themeId = this.getAttribute('aria-controls').split('-').pop();
+                    const modal = document.querySelector(`#hs-scale-animation-modal-${themeId}`);
+                    const themeInput = modal.querySelector('#theme_id');
+                    themeInput.value = themeId;
+                });
             });
+
+            const berandaLink = document.getElementById('beranda-link');
+
+            if (window.location.pathname.includes('tutorial')) {
+                berandaLink.setAttribute('href', '{{ route('home') }}');
+            } else {
+                berandaLink.setAttribute('href', '#beranda');
+            }
         });
     </script>
 

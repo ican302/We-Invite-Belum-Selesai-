@@ -15,6 +15,10 @@ class Galeri extends Model
         'foto_sampul',
         'foto_galeri',
         'video_galeri',
+        'foto_pembuka',
+        'foto_acara',
+        'foto_cerita',
+        'foto_penutup',
     ];
 
     protected $casts = [

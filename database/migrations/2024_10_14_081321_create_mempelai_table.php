@@ -12,7 +12,9 @@ class CreateMempelaiTable extends Migration
             $table->id();
             $table->foreignId('invitation_id')->constrained('invitations')->onDelete('cascade');
             $table->string('nama_pria');
+            $table->string('panggilan_pria');
             $table->string('nama_wanita');
+            $table->string('panggilan_wanita');
             $table->timestamps();
         });
     }

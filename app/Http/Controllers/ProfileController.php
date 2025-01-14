@@ -28,13 +28,13 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
+        if ($request->user()->isDirty('username')) {
             $request->user()->email_verified_at = null;
         }
 
         $request->user()->save();
 
-        return back()->with('success', 'Email berhasil diperbarui');
+        return back()->with('success', 'Username berhasil diperbarui');
     }
 
     /**

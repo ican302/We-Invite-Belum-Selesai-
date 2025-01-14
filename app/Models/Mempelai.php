@@ -12,6 +12,8 @@ class Mempelai extends Model
     protected $table = 'mempelai';
     protected $fillable = [
         'invitation_id',
+        'panggilan_pria',
+        'panggilan_wanita',
         'nama_pria',
         'nama_wanita',
         'ayah_pria',
